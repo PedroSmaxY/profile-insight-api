@@ -1,28 +1,32 @@
 from pyswip import Prolog
 import os
-import platform
 
-prolog = Prolog()
-
-prolog.consult("../prolog/knowledge.prolog")
+PROLOG_FILE_PATH = os.path.abspath("../prolog/knowledge.prolog")
 
 
-def name():
-    return "name"
+class PrologService:
+    def __init__(self):
+        self.prolog = Prolog()
 
+    def get_question(self, perfil: str, num: int):
+        self.prolog.consult(PROLOG_FILE_PATH)
+
+        consult = f"pergunta({perfil}, {num}, Pergunta)"
+        for result in self.prolog.query(consult):
+            return result['Pergunta']
 
 
 if __name__ == "__main__":
+    prolog = Prolog()
+    prolog.consult(PROLOG_FILE_PATH)
 
     def obter_pergunta(perfis, num):
-        """Consulta Prolog para obter uma pergunta com base no perfil e número"""
         consulta = f"pergunta({perfis}, {num}, Pergunta)"
         for resultado in prolog.query(consulta):
             return resultado['Pergunta']
 
     def calcular_pontuacao(respostas):
-        """Calcula a pontuação total das respostas"""
-        respostas_str = ', '.join(map(str, respostas))  # Converte a lista de respostas em uma string
+        respostas_str = ', '.join(map(str, respostas))
         consulta = f"calcular_pontuacao([{respostas_str}], Total)"
         for resultado in prolog.query(consulta):
             return resultado['Total']
@@ -40,6 +44,5 @@ if __name__ == "__main__":
             print("\n" * 50)
 
 
-            # Calculando a pontuação total
     pontuacao_total = calcular_pontuacao(respostas)
     print(f"Pontuação total para {perfis}: {pontuacao_total}")
