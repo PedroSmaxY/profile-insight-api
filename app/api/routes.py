@@ -1,6 +1,6 @@
 from http import HTTPStatus
 
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException
 from ..services.prolog_service import PrologService
 
 routes = APIRouter()
