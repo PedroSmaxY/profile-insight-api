@@ -28,7 +28,7 @@ async def score_calc(perfil: str, answers: List[int]):
     if diagnostic is None:
         raise HTTPException(HTTPStatus.BAD_REQUEST, "Invalid data or no result")
 
-    return {"diagnostic": diagnostic}
+    return { "diagnostic": diagnostic }
 
 
 @routes.post("/diagnostic/complete/")

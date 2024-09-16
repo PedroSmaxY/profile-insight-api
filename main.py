@@ -9,4 +9,8 @@ app = FastAPI(
     redoc_url="/api/redoc"
 )
 
+@app.get("/")
+async def root():
+    return { "hello": "Welcome to profile-insight-api!" }
+
 app.include_router(routes, prefix="/api/v1")
