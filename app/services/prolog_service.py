@@ -2,6 +2,7 @@ from pyswip import Prolog
 
 PROLOG_FILE_PATH = "./app/prolog/knowledge.prolog"
 
+
 class PrologService:
     def __init__(self):
         self.prolog = Prolog()
@@ -13,9 +14,10 @@ class PrologService:
             return result['Pergunta']
         return None
 
-    def calcular_pontuacao(self, answer):
-        answers_str = ', '.join(map(str, answer))
-        consult = f"calcular_pontuacao([{answers_str}], Total)"
+    def score_calc(self, perfil: str, answer: list[int]):
+        answer_str = ', '.join(map(str, answer))
+        consult = f"diagnostico({perfil}, [{answer_str}], Diagnostico)"
+
         for result in self.prolog.query(consult):
-            return result['Total']
+            return result['Diagnostico']
         return None
