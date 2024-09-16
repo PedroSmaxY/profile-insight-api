@@ -28,6 +28,32 @@ pergunta(conformidade, 3, 'Você se considera uma pessoa analítica?').
 pergunta(conformidade, 4, 'Você é rigoroso ao seguir padrões estabelecidos?').
 pergunta(conformidade, 5, 'Você prefere trabalhar com dados e fatos?').
 
-% Função para calcular a pontuação
-calcular_pontuacao([P1, P2, P3, P4, P5], Total) :-
-    Total is P1 + P2 + P3 + P4 + P5.
+% Função para buscar próxima pergunta
+proxima_pergunta(Categoria, Id, Pergunta) :-
+    pergunta(Categoria, Id, Pergunta).
+
+% Diagnóstico com base nas respostas
+diagnostico(Categoria, Respostas, Diagnostico) :-
+    pontuacao(Respostas, Pontuacao),
+    interpretar(Categoria, Pontuacao, Diagnostico).
+
+% Cálculo da pontuação
+pontuacao(Respostas, Total) :-
+    sum_list(Respostas, Total).
+
+% Interpretação do diagnóstico com base na pontuação
+interpretar(dominancia, Pontuacao, 'Alta dominância') :- Pontuacao >= 20.
+interpretar(dominancia, Pontuacao, 'Dominância moderada') :- Pontuacao >= 10, Pontuacao < 20.
+interpretar(dominancia, Pontuacao, 'Baixa dominância') :- Pontuacao < 10.
+
+interpretar(influencia, Pontuacao, 'Alta influência') :- Pontuacao >= 20.
+interpretar(influencia, Pontuacao, 'Influência moderada') :- Pontuacao >= 10, Pontuacao < 20.
+interpretar(influencia, Pontuacao, 'Baixa influência') :- Pontuacao < 10.
+
+interpretar(estabilidade, Pontuacao, 'Alta estabilidade') :- Pontuacao >= 20.
+interpretar(estabilidade, Pontuacao, 'Estabilidade moderada') :- Pontuacao >= 10, Pontuacao < 20.
+interpretar(estabilidade, Pontuacao, 'Baixa estabilidade') :- Pontuacao < 10.
+
+interpretar(conformidade, Pontuacao, 'Alta conformidade') :- Pontuacao >= 20.
+interpretar(conformidade, Pontuacao, 'Conformidade moderada') :- Pontuacao >= 10, Pontuacao < 20.
+interpretar(conformidade, Pontuacao, 'Baixa conformidade') :- Pontuacao < 10.
