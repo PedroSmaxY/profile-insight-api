@@ -1,8 +1,17 @@
-from fastapi import APIRouter
+from http import HTTPStatus
+
+from fastapi import APIRouter, HTTPException, Depends
+from ..services.prolog_service import PrologService
 
 routes = APIRouter()
 
-@routes.get("/users/{id}")
-async def get_users(item_id: int):
-        return {"message": item_id}
+prolog_service = PrologService()
 
+@routes.get("/questions/{perfil}/{num}")
+async def get_questions(perfil: str, num: int):
+    question: str = prolog_service.get_question(perfil, num)
+
+    if question is None:
+        raise HTTPException(HTTPStatus.NOT_FOUND, "Question not found")
+
+    return { "question": question }

@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from .api.routes import routes
+
+
 app = FastAPI(
     title="profile-insight-api",
     version="1.0.0",
