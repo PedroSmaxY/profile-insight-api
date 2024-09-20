@@ -18,6 +18,6 @@ class PrologService:
         return self._execute_query(consult, 'Pergunta')
 
     def score_calc(self, perfil: str, answers: list[int]) -> str | None:
-        answer_str = ', '.join(map(str, answers))
-        consult = f"diagnostico({perfil}, [{answer_str}], Diagnostico)"
+        answers_str = ', '.join(map(str, answers))
+        consult = f"diagnostico({perfil}, [{answers_str}], Diagnostico)"
         return self._execute_query(consult, 'Diagnostico')
