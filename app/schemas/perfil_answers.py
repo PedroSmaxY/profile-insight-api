@@ -2,7 +2,7 @@ from typing import List
 from pydantic import BaseModel
 
 
-class PerfilAnswer(BaseModel):
+class PerfilAnswers(BaseModel):
     dominancia: List[int]
     influencia: List[int]
     estabilidade: List[int]

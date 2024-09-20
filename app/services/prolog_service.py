@@ -1,5 +1,6 @@
 from pyswip import Prolog
 
+
 PROLOG_FILE_PATH = "./app/prolog/knowledge.prolog"
 
 
@@ -8,16 +9,15 @@ class PrologService:
         self.prolog = Prolog()
         self.prolog.consult(PROLOG_FILE_PATH)
 
-    def get_question(self, perfil: str, num: int):
+    def _execute_query(self, consult: str, var_name: str):
+        result = next(self.prolog.query(consult), None)
+        return result.get(var_name) if result else None
+
+    def get_question(self, perfil: str, num: int) -> str | None:
         consult = f"pergunta({perfil}, {num}, Pergunta)"
-        for result in self.prolog.query(consult):
-            return result['Pergunta']
-        return None
+        return self._execute_query(consult, 'Pergunta')
 
-    def score_calc(self, perfil: str, answer: list[int]):
-        answer_str = ', '.join(map(str, answer))
+    def score_calc(self, perfil: str, answers: list[int]) -> str | None:
+        answer_str = ', '.join(map(str, answers))
         consult = f"diagnostico({perfil}, [{answer_str}], Diagnostico)"
-
-        for result in self.prolog.query(consult):
-            return result['Diagnostico']
-        return None
+        return self._execute_query(consult, 'Diagnostico')
