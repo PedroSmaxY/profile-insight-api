@@ -1,1 +1,1 @@
-# investor-profile-api
+# profile-insight-api
